@@ -1,0 +1,4 @@
+pop3log10_R0
+pop3alpha
+pop3beta
+pop3gamma
