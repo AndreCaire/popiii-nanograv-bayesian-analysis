@@ -1,12 +1,28 @@
 import numpy as np
 import warnings
 import os
+from pathlib import Path
 from scipy.integrate import simpson
 from enterprise.signals import parameter
 from ceffyl.Ceffyl import ceffyl, signal 
 from sampler_utils import setup_sampler
 from astropy.cosmology import FlatLambdaCDM
 import astropy.constants as const
+
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+
+DEFAULT_CEFFYL_DATA_DIR = (
+    PROJECT_ROOT / "data" / "30f_fs{cp}_ceffyl"
+)
+
+CEFFYL_DATA_DIR = Path(
+    os.environ.get(
+        "CEFFYL_DATA_DIR",
+        str(DEFAULT_CEFFYL_DATA_DIR),
+    )
+).expanduser()
+
+RESULTS_DIR = PROJECT_ROOT / "results"
 
 warnings.filterwarnings('ignore')
 
@@ -63,10 +79,17 @@ def toy_model_psd(freqs, Tspan, log10_R0, alpha, beta, gamma, **kwargs):
     return rho2.reshape(input_shape)
 
 # --- Sampler Setup ---
-print("Uploading Ceffyl...")
-datadir = './data/30f_fs{cp}_ceffyl'
-ce = ceffyl(datadir)
+print("Loading Ceffyl likelihood data...")
 
+if not CEFFYL_DATA_DIR.exists():
+    raise FileNotFoundError(
+        "Ceffyl likelihood data directory not found: "
+        f"{CEFFYL_DATA_DIR}\n"
+        "Set the CEFFYL_DATA_DIR environment variable to the "
+        "correct directory."
+    )
+
+ce = ceffyl(str(CEFFYL_DATA_DIR))
 # --- PRIORS ---
 params_toy = [
     parameter.Uniform(-60,-15)('log10_R0'), 
@@ -80,11 +103,16 @@ sig_toy = signal(psd=toy_model_psd, params=params_toy, name='toy_model',
 
 ce.add_signals([sig_toy])
 
-outdir = './chains_toy_final'
-if not os.path.exists(outdir): os.makedirs(outdir)
+RESULTS_DIR.mkdir(parents=True, exist_ok=True)
 
-sampler = setup_sampler(ce, outdir, ce.ln_likelihood, ce.ln_prior, resume=False, jump=True)
-
+sampler = setup_sampler(
+    ce,
+    str(RESULTS_DIR),
+    ce.ln_likelihood,
+    ce.ln_prior,
+    resume=False,
+    jump=True,
+)
 # Initial points
 x0 = np.array([-21.3, 3.0, 5.0, 2.5])
 
