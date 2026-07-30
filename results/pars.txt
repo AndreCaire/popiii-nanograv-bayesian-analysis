@@ -1,4 +1,4 @@
-pop3log10_R0
-pop3alpha
-pop3beta
-pop3gamma
+toy_modellog10_R0
+toy_modelalpha
+toy_modelbeta
+toy_modelgamma
