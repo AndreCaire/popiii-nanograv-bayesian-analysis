@@ -379,7 +379,7 @@ Additional limitations include:
 
 Planned improvements include:
 
-- adding a pinned `requirements.txt` or `environment.yml`;
+- pinning exact dependency versions and adding a reproducible environment file;
 - documenting how to obtain and configure the external likelihood data;
 - removing hard-coded paths from the analysis;
 - introducing command-line arguments or a configuration file;
