@@ -306,10 +306,6 @@ external data files are not included in this repository.
 
 ---
 
-
-
----
-
 ## Sampler utilities
 
 The file:
@@ -354,8 +350,9 @@ Complete reproduction of the PTMCMC run still requires:
 3. Correct configuration of the external data path.
 4. Sufficient computational time for posterior sampling.
 
-A pinned environment file and fully automated execution instructions remain
-future repository improvements.
+A requirements file is provided for dependency installation. Exact version
+pinning and fully automated environment reproduction remain future repository
+improvements.
 
 ---
 
