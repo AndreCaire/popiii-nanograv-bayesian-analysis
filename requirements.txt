@@ -1,0 +1,9 @@
+numpy
+scipy
+matplotlib
+astropy
+corner
+ceffyl
+enterprise-pulsar
+ptmcmcsampler
+git+https://github.com/nanograv/enterprise_extensions@master
