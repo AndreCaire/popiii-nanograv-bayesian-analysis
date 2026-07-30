@@ -16,17 +16,19 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-CHAIN_DIR = Path("chains_toy_final")
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+
+CHAIN_DIR = PROJECT_ROOT / "results"
 CHAIN_FILE = CHAIN_DIR / "chain_1.txt"
 PARAMS_FILE = CHAIN_DIR / "pars.txt"
 
+FIGURES_DIR = PROJECT_ROOT / "figures"
+TRACEPLOT_FILE = FIGURES_DIR / "traceplot_corrected.png"
+CORNER_FILE = FIGURES_DIR / "corner_corrected.png"
+AUTOCORR_FILE = FIGURES_DIR / "autocorrelation_corrected.png"
+
 BURN_IN_FRACTION = 0.25
 MAX_AUTOCORR_LAG = 1000
-
-TRACEPLOT_FILE = Path("diagnostics_traceplot_corrected.png")
-CORNER_FILE = Path("diagnostics_corner_corrected.png")
-AUTOCORR_FILE = Path("diagnostics_autocorr_corrected.png")
-
 
 def load_chain() -> tuple[np.ndarray, list[str]]:
     """Load the raw PTMCMC chain and parameter names."""
@@ -248,6 +250,8 @@ def print_summary(
 
 
 def main() -> None:
+    FIGURES_DIR.mkdir(parents=True, exist_ok=True)
+    
     raw_chain, parameter_names = load_chain()
     samples, burn_in_samples = remove_burn_in(
         raw_chain,
