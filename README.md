@@ -240,6 +240,69 @@ contained no executable differences from the installed package.
 
 ---
 
+## Installation and usage
+
+Clone the repository and enter the project directory:
+
+```bash
+git clone https://github.com/AndreCaire/popiii-nanograv-bayesian-analysis.git
+cd popiii-nanograv-bayesian-analysis
+```
+
+### Reproducing the stored-chain diagnostics
+
+The posterior diagnostics can be reproduced directly from the chain stored in `results/`.
+
+Install the packages required by the diagnostic script:
+
+```bash
+python -m pip install numpy matplotlib corner
+```
+
+Run:
+
+```bash
+python src/diagnostic_pop3_corrected.py
+```
+
+The script:
+
+- removes the first 25% of the stored chain as burn-in;
+- calculates posterior quantiles;
+- estimates integrated autocorrelation times;
+- estimates effective sample sizes;
+- regenerates the trace, corner, and autocorrelation plots.
+
+The generated files are saved in:
+
+```text
+figures/
+```
+
+### Running the complete Bayesian analysis
+
+Install the complete project dependencies with:
+
+```bash
+python -m pip install -r requirements.txt
+```
+
+The complete PTMCMC analysis is implemented in:
+
+```text
+src/run_pop3.py
+```
+
+Running the full analysis additionally requires compatible external `ceffyl`
+likelihood data and correct configuration of its local data path. These
+external data files are not included in this repository.
+
+---
+
+
+
+---
+
 ## Sampler utilities
 
 The file:
