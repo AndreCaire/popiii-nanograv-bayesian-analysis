@@ -93,6 +93,7 @@ popiii-nanograv-bayesian-analysis/
 │   ├── diagnostic_pop3_corrected.py
 │   ├── run_pop3.py
 │   └── sampler_utils.py
+├── requirements.txt
 └── README.md
 ```
 
@@ -112,6 +113,12 @@ Contains the corrected posterior and convergence diagnostics.
 
 Contains technical notes describing the repository reconstruction, dependency
 cleanup, diagnostic correction, and scientific interpretation.
+
+---
+
+### `requirements.txt`
+
+Lists the Python packages required by the complete scientific analysis.
 
 ---
 
